@@ -1,2 +1,2 @@
-# kalemah
-"kalemah - كَلِمة" is a JS localization library
+# Kalemah - كَلِمة
+"kalemah - كَلِمة" is a JS localizations library
