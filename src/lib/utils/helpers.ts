@@ -1,6 +1,6 @@
 import internal from "../store/internal";
 import { IGeneric } from "../types";
-import { ILanguage } from "../types/doc";
+import { IDocInstance, ILocalization } from "../types/doc";
 
 export function setActiveLanguage({
   docKey,
@@ -9,9 +9,17 @@ export function setActiveLanguage({
   docKey: string;
   name: string;
 }): string | undefined {
-  let doc = internal.get(docKey);
+  let doc: IDocInstance = internal.get(docKey);
   if (!doc) {
     console.error("doc not found");
+    return;
+  }
+
+  // check if name doesn't exist
+  const wrongName = doc?._localizations?.find((l) => l.name === name);
+
+  if (!wrongName) {
+    console.error("please double check the name, it doesn't exist");
     return;
   }
 
@@ -44,7 +52,9 @@ export function getActiveLanguageContent({
     return;
   }
 
-  let active = doc._languages.find((l: ILanguage) => l.name === doc._active);
+  let active = doc._localizations.find(
+    (l: ILocalization) => l.name === doc._active
+  );
   if (!active) {
     console.error("active language not found");
     return;
@@ -55,7 +65,7 @@ export function getActiveLanguageContent({
 
 /**
  * gets a property in an object based on string
- * 
+ *
  * e.g. => "k1.c.p" or "['k1'].c.p"
  */
 export function getObjPath(obj: IGeneric, path: string): any {
@@ -63,7 +73,7 @@ export function getObjPath(obj: IGeneric, path: string): any {
 
   let current = obj;
   for (const key of keys) {
-    if (current && typeof current === 'object' && key in current) {
+    if (current && typeof current === "object" && key in current) {
       current = current[key];
     } else {
       return undefined; // Property not found
@@ -78,5 +88,5 @@ export function getObjPath(obj: IGeneric, path: string): any {
  */
 function parsePath(path: string): string[] {
   const bracketsRegex = /\['(.*?)'\]/g;
-  return path.replace(bracketsRegex, '.$1').split('.');
+  return path.replace(bracketsRegex, ".$1").split(".");
 }

@@ -1,4 +1,7 @@
 import type { IGeneric } from ".";
+/**
+ * The Documentation instance
+ */
 export interface IDoc {
   /**
    * The key of this doc.
@@ -10,27 +13,54 @@ export interface IDoc {
    */
   browser?: boolean;
   /**
-   * The languages in this doc.
+   * The localizations of this doc.
    */
-  languages: ILanguage[];
+  localizations: ILocalization[];
   /**
-   * The default language to use (language name).
+   * The default localization to use (localization name).
    */
   default?: string;
   /**
-   * active language
+   * active localization
    */
   active?: string;
 }
 
-export interface ILanguage {
+/**
+ * The internal inherited properties of the document instance
+ */
+export interface IDocInstance {
+  _key: string;
+  _browser: boolean;
+  _localizations: ILocalization[];
+  _default: string;
+  _active: string;
+}
+
+export interface ILocalization {
   /**
-   * name of the language
+   * name of the localization (MUST BE UNIQUE)
    */
   name: string;
   /**
-   * the files of the languages
+   * the file of the localization
    * @type object (keys, values)
    */
   content: IGeneric;
+  /**
+   * dir, will be considered if you're in the browser mode
+   */
+  dir?: string;
+  /**
+   * country code of the language, consider it if you have more than on accent for a language
+   */
+  country?: string;
+  /**
+   * code of the localization (Lang-CountryCode)
+   */
+  code?: string;
+  /**
+   * ISO code
+   */
+  iso?: string;
 }

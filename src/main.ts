@@ -1,13 +1,12 @@
 import ar from "./ar";
 import en from "./en";
 
-import Doc from "./lib/core/doc";
-import kalemah from "./lib/core/kalemah";
+import { Doc, kalemah } from "./lib";
 
 const doc = new Doc({
   browser: false,
   default: "en",
-  languages: [
+  localizations: [
     {
       name: "en",
       content: en,
@@ -35,7 +34,7 @@ if (localStorageLng) {
 
 const txt = document.getElementById("txt")!;
 
-txt.textContent = k(`country.${true ? 'more' : ''}['name']`);
+txt.textContent = k(`country.${true ? "more" : ""}['name']`);
 
 const btn = document.getElementById("btn")!;
 

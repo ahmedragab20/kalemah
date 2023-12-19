@@ -25,13 +25,16 @@ export interface IKalemah {
    */
   setLng: (lng: string) => void;
 }
-
+/**
+ * bunch of helpers to interact with the document
+ */
 export default function kalemah(docKey?: string): IKalemah {
   if (docKey && !internal.has(docKey)) {
     throw new Error(`docKey ${docKey} not found`);
   }
 
-  const _activeLng = () => getActiveLanguageContent({ docKey: docKey || "default" }) || {};
+  const _activeLng = () =>
+    getActiveLanguageContent({ docKey: docKey || "default" }) || {};
 
   const k = (path: string, dynamics?: IGeneric): string => {
     if (!dynamics) {
@@ -52,6 +55,7 @@ export default function kalemah(docKey?: string): IKalemah {
   return {
     k,
     lng: () => getActiveLanguage({ docKey: docKey || "default" })!,
-    setLng: (lng: string) => setActiveLanguage({ docKey: docKey || "default", name: lng }),
+    setLng: (lng: string) =>
+      setActiveLanguage({ docKey: docKey || "default", name: lng }),
   };
 }

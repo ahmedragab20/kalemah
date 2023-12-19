@@ -1,4 +1,4 @@
-import type { IDoc, ILanguage } from "../types/doc";
+import type { IDoc, ILocalization } from "../types/doc";
 import internal from "../store/internal";
 
 /**
@@ -7,7 +7,7 @@ import internal from "../store/internal";
 export default class Doc {
   private readonly _key: string = "";
   private readonly _browser: boolean = false;
-  private readonly _languages: ILanguage[] = [];
+  private readonly _localizations: ILocalization[] = [];
   private readonly _default: string = "";
   private readonly _active: string = "";
 
@@ -16,16 +16,16 @@ export default class Doc {
       throw new Error("Doc must be defined");
     }
 
-    if (!doc?.languages?.length) {
+    if (!doc?.localizations?.length) {
       throw new Error("Doc must have at least one language");
-    } else if (doc.languages?.find((l) => !l?.name || !l.content)) {
+    } else if (doc.localizations?.find((l) => !l?.name || !l.content)) {
       throw new Error("Every Language must have a name and content for each language");
     }
 
     this._key = doc.key || "default";
     this._browser = doc.browser || false;
-    this._languages = doc.languages;
-    this._default = doc.default || doc.languages?.[0]?.name;
+    this._localizations = doc.localizations;
+    this._default = doc.default || doc.localizations?.[0]?.name;
     this._active = doc.active || this._default;
 
     // persist the doc internally
