@@ -12,18 +12,22 @@ export interface IDoc {
   /**
    * The languages in this doc.
    */
-  languages: Partial<ILanguage>[];
+  languages: ILanguage[];
   /**
-   * The default language to use (file path).
+   * The default language to use (language name).
    */
   default?: string;
+  /**
+   * active language
+   */
+  active?: string;
 }
 
 export interface ILanguage {
   /**
-   * The path to the file.
+   * name of the language
    */
-  path: string;
+  name: string;
   /**
    * the files of the languages
    * @type object (keys, values)
