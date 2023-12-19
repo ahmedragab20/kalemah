@@ -2,7 +2,7 @@ import internal from "../store/internal";
 import { IGeneric } from "../types";
 import { IDocInstance, ILocalization } from "../types/doc";
 
-export function setActiveLanguage({
+export function changeLanguage({
   docKey,
   name,
 }: {
@@ -27,7 +27,7 @@ export function setActiveLanguage({
   internal.set(docKey, doc);
 }
 
-export function getActiveLanguage({
+export function activeLocalizationName({
   docKey,
 }: {
   docKey: string;
@@ -41,7 +41,7 @@ export function getActiveLanguage({
   return doc._active;
 }
 
-export function getActiveLanguageContent({
+export function activeLocalizationContent({
   docKey,
 }: {
   docKey: string;
@@ -52,31 +52,102 @@ export function getActiveLanguageContent({
     return;
   }
 
-  let active = doc._localizations.find(
-    (l: ILocalization) => l.name === doc._active
-  );
-  if (!active) {
-    console.error("active language not found");
+  return activeLocalization({ docKey: docKey }).content;
+}
+
+/**
+ * Returns The Active Localization
+ */
+export function activeLocalization({ docKey }: { docKey: string }) {
+  let doc = internal.get(docKey);
+  if (!doc) {
+    console.error("doc not found");
     return;
   }
 
-  return active.content;
+  let active = doc._localizations.find(
+    (l: ILocalization) => l.name === doc._active
+  );
+
+  if (!active) {
+    console.error("active Localization not found");
+    return;
+  }
+
+  return active;
+}
+
+/**
+ * checks if the key exist in the document
+ */
+export function exists({
+  docKey,
+  path,
+}: {
+  docKey: string;
+  path: string;
+}): boolean {
+  let doc = internal.get(docKey);
+  if (!doc) {
+    console.error("doc not found");
+    return false;
+  }
+
+  return (
+    getObjPath(activeLocalizationContent({ docKey }) || {}, path) !== undefined
+  );
+}
+
+/**
+ * returns localization by name
+ */
+
+export function getLocalization({
+  docKey,
+  name,
+}: {
+  docKey: string;
+  name?: string;
+}): ILocalization | undefined {
+  let doc: IDocInstance = internal.get(docKey);
+  if (!doc) {
+    console.error("doc not found");
+    return;
+  }
+  if (!name) {
+    return activeLocalization({ docKey: docKey });
+  }
+
+  return doc._localizations.find((l) => l.name === name);
 }
 
 /**
  * gets a property in an object based on string
  *
- * e.g. => "k1.c.p" or "['k1'].c.p"
+ * e.g. => "k1.c.p" or or "k1.['c']['0']"
  */
 export function getObjPath(obj: IGeneric, path: string): any {
   const keys = parsePath(path);
 
   let current = obj;
   for (const key of keys) {
-    if (current && typeof current === "object" && key in current) {
-      current = current[key];
+    if (current && typeof current === "object") {
+      if (Array.isArray(current) && /^\d+$/.test(key) /* if key is digit */) {
+        const index = parseInt(key, 10);
+
+        if (index >= 0 && index < current.length) {
+          current = current[index];
+        } else {
+          return undefined;
+        }
+      } else if (key in current) {
+        // @ts-ignore
+        current = current[key];
+      } else {
+        return undefined;
+      }
     } else {
-      return undefined; // Property not found
+      return undefined;
     }
   }
 
@@ -88,5 +159,6 @@ export function getObjPath(obj: IGeneric, path: string): any {
  */
 function parsePath(path: string): string[] {
   const bracketsRegex = /\['(.*?)'\]/g;
+
   return path.replace(bracketsRegex, ".$1").split(".");
 }

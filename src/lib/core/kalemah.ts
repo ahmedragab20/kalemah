@@ -1,29 +1,55 @@
 import internal from "../store/internal";
 import { IGeneric } from "../types";
+import { IDocInstance, ILocalization } from "../types/doc";
 import {
-  getActiveLanguage,
-  getActiveLanguageContent,
+  activeLocalizationName,
+  activeLocalizationContent,
   getObjPath,
+  exists,
+  getLocalization,
+  changeLanguage,
 } from "../utils/helpers";
-
-import { setActiveLanguage } from "../utils/helpers";
 
 export interface IKalemah {
   /**
-   * Returns the value of the path in the active language.
+   * Returns the value of the path in the active localization content.
    * @param path {string}
    * @param dynamics {object}
    * @returns {string}
    */
   k: (path: string, dynamics?: IGeneric) => any;
   /**
-   * The active language name.
+   * The active localization name.
    */
-  lng: () => string;
+  activeName: () => string;
   /**
-   * Set the active language.
+   * Set the active localization.
    */
-  setLng: (lng: string) => void;
+  changeLanguage: (lng: string) => void;
+  /**
+   * Check if the path exists in the active localization content.
+   */
+  exists: (path: string) => boolean;
+  /**
+   * The active localization content.
+   */
+  activeContent: () => IGeneric;
+  /**
+   * Returns all the localizations content
+   */
+  languages: () => IGeneric[];
+  /**
+   * gets the value of a key in a localization content or in the active localization content.
+   */
+  getKey: (key: string, lngName?: string) => any;
+  /**
+   * returns Localization (with all the details)
+   */
+  getLocalization: (lngName?: string) => ILocalization | undefined;
+  /**
+   * the direction of the localization
+   */
+  dir: (lngName?: string) => string | undefined;
 }
 /**
  * bunch of helpers to interact with the document
@@ -34,7 +60,7 @@ export default function kalemah(docKey?: string): IKalemah {
   }
 
   const _activeLng = () =>
-    getActiveLanguageContent({ docKey: docKey || "default" }) || {};
+    activeLocalizationContent({ docKey: docKey || "default" }) || {};
 
   const k = (path: string, dynamics?: IGeneric): string => {
     if (!dynamics) {
@@ -52,10 +78,47 @@ export default function kalemah(docKey?: string): IKalemah {
     return txt;
   };
 
+  const getKey = (key: string, lngName?: string) => {
+    if (!key) {
+      console.error("key is required");
+
+      return;
+    }
+
+    const lng =
+      lngName || activeLocalizationName({ docKey: docKey || "default" });
+    return getObjPath(
+      (internal.get(docKey || "default") as IDocInstance)?._localizations?.find(
+        (l) => l.name === lng
+      )?.content || {},
+      key
+    );
+  };
+
+  const dir = (lngName?: string) => {
+    return getLocalization({
+      docKey: docKey || "default",
+      name: lngName,
+    })?.dir;
+  };
+
   return {
     k,
-    lng: () => getActiveLanguage({ docKey: docKey || "default" })!,
-    setLng: (lng: string) =>
-      setActiveLanguage({ docKey: docKey || "default", name: lng }),
+    activeName: () => activeLocalizationName({ docKey: docKey || "default" })!,
+    changeLanguage: (lng: string) =>
+      changeLanguage({ docKey: docKey || "default", name: lng }),
+    exists: (path: string) => exists({ docKey: docKey || "default", path }),
+    activeContent: () => _activeLng(),
+    languages: () =>
+      (internal.get(docKey || "default") as IDocInstance)?._localizations?.map(
+        (l) => l.content
+      ),
+    getKey,
+    getLocalization: (lngName?: string) =>
+      getLocalization({
+        docKey: docKey || "default",
+        name: lngName,
+      }),
+    dir,
   };
 }

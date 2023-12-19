@@ -19,7 +19,9 @@ export default class Doc {
     if (!doc?.localizations?.length) {
       throw new Error("Doc must have at least one language");
     } else if (doc.localizations?.find((l) => !l?.name || !l.content)) {
-      throw new Error("Every Language must have a name and content for each language");
+      throw new Error(
+        "Every Language must have a name and content for each language"
+      );
     }
 
     this._key = doc.key || "default";
@@ -27,7 +29,7 @@ export default class Doc {
     this._localizations = doc.localizations;
     this._default = doc.default || doc.localizations?.[0]?.name;
     this._active = doc.active || this._default;
-
+    
     // persist the doc internally
     internal.set(this._key, this);
   }
