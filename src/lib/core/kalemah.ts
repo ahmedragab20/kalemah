@@ -38,7 +38,7 @@ export interface IKalemah {
   /**
    * Returns all the localizations content
    */
-  languages: () => IGeneric[];
+  contents: () => IGeneric[];
   /**
    * gets the value of a key in a localization content or in the active localization content.
    */
@@ -115,7 +115,7 @@ export default function kalemah(docKey?: string): IKalemah {
       changeLanguage({ docKey: docKey || "default", name: lng }),
     exists: (path: string) => exists({ docKey: docKey || "default", path }),
     activeContent: () => _activeLng(),
-    languages: () =>
+    contents: () =>
       (internal.get(docKey || "default") as IDocInstance)?._localizations?.map(
         (l) => l.content
       ),
