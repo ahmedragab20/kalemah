@@ -2,6 +2,9 @@
 
 😄 Kalemah in arabic means "word"
 
+[![npm version](https://img.shields.io/badge/NPM_Home_Page-orange)](https://www.npmjs.com/package/kalemah)
+[![Install size](https://packagephobia.com/badge?p=kalemah)](https://packagephobia.com/result?p=kalemah)
+
 ## Get Started
 
 ```bash [npm]
@@ -132,7 +135,7 @@ const msg = k("key", {
 
 > 🀄️ <br /> > `kalemah()` -> refers to the default document <br /> > `kalemah(/* doc_id */)` -> if you have a document with an especial "key"
 
-#### changeLanguage(local_name)
+#### changeLanguage(local_name)****
 
 changes the active localization for the target doc
 
