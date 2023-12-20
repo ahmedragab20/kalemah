@@ -1,6 +1,6 @@
 import internal from "../store/internal";
-import { IGeneric } from "../types";
-import { IDocInstance, ILocalization } from "../types/doc";
+import type { IGeneric } from "../types";
+import type { IDocInstance, ILocalization } from "../types/doc";
 import {
   activeLocalizationName,
   activeLocalizationContent,
@@ -8,6 +8,7 @@ import {
   exists,
   getLocalization,
   changeLanguage,
+  getLocalizations,
 } from "../utils/helpers";
 
 export interface IKalemah {
@@ -47,6 +48,10 @@ export interface IKalemah {
    */
   getLocalization: (lngName?: string) => ILocalization | undefined;
   /**
+   * returns the entire Localizations (with all the details)
+   */
+  getLocalizations: (lngName?: string) => ILocalization[] | undefined;
+  /**
    * the direction of the localization
    */
   dir: (lngName?: string) => string | undefined;
@@ -59,10 +64,11 @@ export default function kalemah(docKey?: string): IKalemah {
     throw new Error(`docKey ${docKey} not found`);
   }
 
-  const _activeLng = () =>
-    activeLocalizationContent({ docKey: docKey || "default" }) || {};
+  function _activeLng(): IGeneric {
+    return activeLocalizationContent({ docKey: docKey || "default" }) || {};
+  }
 
-  const k = (path: string, dynamics?: IGeneric): string => {
+  function k(path: string, dynamics?: IGeneric): string {
     if (!dynamics) {
       return getObjPath(_activeLng(), path);
     }
@@ -76,9 +82,9 @@ export default function kalemah(docKey?: string): IKalemah {
     }
 
     return txt;
-  };
+  }
 
-  const getKey = (key: string, lngName?: string) => {
+  function getKey(key: string, lngName?: string) {
     if (!key) {
       console.error("key is required");
 
@@ -93,14 +99,14 @@ export default function kalemah(docKey?: string): IKalemah {
       )?.content || {},
       key
     );
-  };
+  }
 
-  const dir = (lngName?: string) => {
+  function dir(lngName?: string) {
     return getLocalization({
       docKey: docKey || "default",
       name: lngName,
     })?.dir;
-  };
+  }
 
   return {
     k,
@@ -118,6 +124,10 @@ export default function kalemah(docKey?: string): IKalemah {
       getLocalization({
         docKey: docKey || "default",
         name: lngName,
+      }),
+    getLocalizations: (docKey?: string) =>
+      getLocalizations({
+        docKey: docKey || "default",
       }),
     dir,
   };

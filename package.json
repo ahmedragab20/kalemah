@@ -2,12 +2,21 @@
   "name": "kalemah",
   "version": "0.0.0",
   "type": "module",
-  "description": "(kalemah - كَلِمة) is a JS localizations library",
+  "description": "(kalemah - كَلِمة) is an internationalization library written fully in Typescript",
   "author": "Ahmed Ragab <ahmedragab20901@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/ahmedragab20/kalemah"
+  },
+  "types": "./dist/kalemah.d.ts",
+  "main": "./dist/kalemah.umd.cjs",
+  "module": "./dist/kalemah.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kalemah.js",
+      "require": "./dist/kalemah.umd.cjs"
+    }
   },
   "homepage": "https://github.com/ahmedragab20/kalemah",
   "bugs": {
@@ -21,7 +30,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rm -rf dist && tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {

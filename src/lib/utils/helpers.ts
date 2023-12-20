@@ -1,6 +1,6 @@
 import internal from "../store/internal";
-import { IGeneric } from "../types";
-import { IDocInstance, ILocalization } from "../types/doc";
+import type { IGeneric } from "../types";
+import type { IDocInstance, ILocalization } from "../types/doc";
 
 export function changeLanguage({
   docKey,
@@ -119,6 +119,19 @@ export function getLocalization({
   }
 
   return doc._localizations.find((l) => l.name === name);
+}
+
+/**
+ * Get all localizations
+ */
+export function getLocalizations({ docKey }: { docKey: string }) {
+  let doc: IDocInstance = internal.get(docKey);
+  if (!doc) {
+    console.error("doc not found");
+    return;
+  }
+
+  return doc._localizations;
 }
 
 /**
