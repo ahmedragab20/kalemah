@@ -72,7 +72,6 @@ export default function kalemah(docKey?: string): IKalemah {
     if (!dynamics) {
       return getObjPath(_activeLng(), path);
     }
-    console.log(dynamics);
 
     let txt: string = getObjPath(_activeLng(), path);
 

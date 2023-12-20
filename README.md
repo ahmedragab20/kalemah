@@ -133,9 +133,11 @@ const msg = k("key", {
 // result: Egypt is where I'm from
 ```
 
-> 🀄️ <br /> > `kalemah()` -> refers to the default document <br /> > `kalemah(/* doc_id */)` -> if you have a document with an especial "key"
+> 🀄️ <br /> 
+> `kalemah()` -> refers to the default document <br /> 
+> `kalemah(doc_id)` -> if you have a document with an especial "key"
 
-#### changeLanguage(local_name)****
+#### changeLanguage(local_name)
 
 changes the active localization for the target doc
 
