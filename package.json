@@ -1,6 +1,6 @@
 {
   "name": "kalemah",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "description": "(kalemah - كَلِمة) is an internationalization library written fully in Typescript",
   "author": "Ahmed Ragab <ahmedragab20901@gmail.com>",
