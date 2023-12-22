@@ -167,7 +167,7 @@ Returns The active localization name for the target doc
 import { kalemah } from "kalemah";
 const { activeName } = kalemah(/* doc_id */);
 
-const content = activeName();
+const name = activeName();
 ```
 
 #### getLocalization()

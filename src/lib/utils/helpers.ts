@@ -142,6 +142,10 @@ export function getLocalizations({ docKey }: { docKey: string }) {
 export function getObjPath(obj: IGeneric, path: string): any {
   const keys = parsePath(path);
 
+  if (!keys || !keys?.length) {
+    return;
+  }
+
   let current = obj;
   for (const key of keys) {
     if (current && typeof current === "object") {
@@ -170,8 +174,13 @@ export function getObjPath(obj: IGeneric, path: string): any {
 /**
  * parses the input path and returns an array of keys
  */
-function parsePath(path: string): string[] {
+function parsePath(path: string): string[] | undefined {
+  if (!path) {
+    console.warn("key is undefined");
+    return;
+  }
+
   const bracketsRegex = /\['(.*?)'\]/g;
 
-  return path.replace(bracketsRegex, ".$1").split(".");
+  return path?.replace(bracketsRegex, ".$1")?.split(".");
 }
