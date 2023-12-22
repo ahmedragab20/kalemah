@@ -140,13 +140,15 @@ export function getLocalizations({ docKey }: { docKey: string }) {
  * e.g. => "k1.c.p" or or "k1.['c']['0']"
  */
 export function getObjPath(obj: IGeneric, path: string): any {
-  const keys = parsePath(path);
-
-  if (!keys || !keys?.length) {
-    return;
+  if (!obj || !path) {
+    console.log("%cgetObjPath()", "font-weight: bold; color: red");
+    throw TypeError("obj & path are required")
   }
 
+  const keys = parsePath(path);
+
   let current = obj;
+
   for (const key of keys) {
     if (current && typeof current === "object") {
       if (Array.isArray(current) && /^\d+$/.test(key) /* if key is digit */) {
@@ -174,10 +176,9 @@ export function getObjPath(obj: IGeneric, path: string): any {
 /**
  * parses the input path and returns an array of keys
  */
-function parsePath(path: string): string[] | undefined {
+function parsePath(path: string): string[] {
   if (!path) {
-    console.warn("key is undefined");
-    return;
+    return [];
   }
 
   const bracketsRegex = /\['(.*?)'\]/g;

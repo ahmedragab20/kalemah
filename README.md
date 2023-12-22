@@ -245,13 +245,17 @@ dir("ar"); // rtl
 ```
 
 ---
-###### Palestine, Sudan, Syria - I will never forget
-<h3>
-🇵🇸🇸🇩🇸🇾
-</h3>
 
-###### Free My People. Be on the right side of the history
+**Palestine, Sudan, Syria - I will never forget**
+<br />
+<br />
+
+🇵🇸🇸🇩🇸🇾
+
+<br />
+
+**Free My People. Be on the right side of the history**
 
 ---
 Alhamdulillah, Allah is the best of the planners 💚️ <br />
-<strong><small>MIT © Ahmed Ragab</small></strong>
+**MIT © Ahmed Ragab**

@@ -68,19 +68,42 @@ export default function kalemah(docKey?: string): IKalemah {
     return activeLocalizationContent({ docKey: docKey || "default" }) || {};
   }
 
-  function k(path: string, dynamics?: IGeneric): string {
-    if (!dynamics) {
-      return getObjPath(_activeLng(), path);
+  function k(path: string, dynamics?: IGeneric): string | undefined {
+    if (!path) {
+      console.log("%cK() Error", "font-weight: bold; color: red;");
+      throw TypeError("You must send key");
     }
 
-    let txt: string = getObjPath(_activeLng(), path);
+    try {
+      let txt: string;
 
-    for (const key in dynamics) {
-      let pattern = new RegExp(`{{${key}}}`, "g");
-      txt = txt.replace(pattern, dynamics[key]);
+      if (!dynamics) {
+        txt = getObjPath(_activeLng(), path);
+
+        if (!txt) {
+          throw undefined;
+        }
+
+        return txt;
+      }
+
+      // if dynamics...
+      
+      txt = getObjPath(_activeLng(), path);
+
+      for (const key in dynamics) {
+        let pattern = new RegExp(`{{${key}}}`, "g");
+        txt = txt?.replace(pattern, dynamics[key]);
+      }
+
+      if (!txt) {
+        throw undefined;
+      }
+
+      return txt;
+    } catch (error) {
+      console.warn("key not found");
     }
-
-    return txt;
   }
 
   function getKey(key: string, lngName?: string) {
