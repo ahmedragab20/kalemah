@@ -32,7 +32,7 @@
     "dev": "vite",
     "build": "rm -rf dist && tsc && vite build",
     "preview": "vite preview",
-    "publish": "rm -rf dist && tsc && vite build && npm publish"
+    "release": "rm -rf dist && tsc && vite build && npm publish"
   },
   "devDependencies": {
     "@types/node": "^20.4.2",
