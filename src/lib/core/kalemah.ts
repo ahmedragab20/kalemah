@@ -20,6 +20,12 @@ export interface IKalemah {
    */
   k: (path: string, dynamics?: IGeneric) => any;
   /**
+   * Returns the value of the path in the active localization content.
+   * @param cb {function}
+   * @returns {string}
+   */
+  kx: <T>(cb: (locals: T) => string) => string;
+  /**
    * The active localization name.
    */
   activeName: () => string;
@@ -88,7 +94,7 @@ export default function kalemah(docKey?: string): IKalemah {
       }
 
       // if dynamics...
-      
+
       txt = getObjPath(_activeLng(), path);
 
       for (const key in dynamics) {
@@ -104,6 +110,10 @@ export default function kalemah(docKey?: string): IKalemah {
     } catch (error) {
       console.warn("key not found");
     }
+  }
+
+  function kx<T>(cb: (locals: T) => string) {
+    return cb(_activeLng() as T);
   }
 
   function getKey(key: string, lngName?: string) {
@@ -132,6 +142,7 @@ export default function kalemah(docKey?: string): IKalemah {
 
   return {
     k,
+    kx,
     activeName: () => activeLocalizationName({ docKey: docKey || "default" })!,
     changeLanguage: (lng: string) =>
       changeLanguage({ docKey: docKey || "default", name: lng }),
