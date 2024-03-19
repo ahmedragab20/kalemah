@@ -26,5 +26,5 @@
     "esModuleInterop": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["packages"]
+  "include": ["src"]
 }
