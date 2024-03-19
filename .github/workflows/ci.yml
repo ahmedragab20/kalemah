@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: "latest"
+      - run: bun install --frozen-lockfile
+      - run: bun typecheck
+      - run: bun lint

@@ -32,12 +32,19 @@
     "dev": "vite",
     "build": "rm -rf dist && tsc && vite build",
     "preview": "vite preview",
-    "release": "rm -rf dist && tsc && vite build && npm publish"
+    "release": "rm -rf dist && tsc && vite build && npm publish",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --cache ./src --ext .ts --fix"
   },
   "devDependencies": {
-    "@types/node": "^20.4.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "vite-plugin-dts": "^3.3.1"
+    "@types/bun": "latest",
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "eslint": "^8.57.0",
+    "knip": "^5.1.2",
+    "taze": "^0.13.3",
+    "typescript": "^5.4.2",
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.7.3"
   }
 }

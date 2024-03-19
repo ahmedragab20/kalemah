@@ -142,7 +142,7 @@ export function getLocalizations({ docKey }: { docKey: string }) {
 export function getObjPath(obj: IGeneric, path: string): any {
   if (!obj || !path) {
     console.log("%cgetObjPath()", "font-weight: bold; color: red");
-    throw TypeError("obj & path are required")
+    throw TypeError("obj & path are required");
   }
 
   const keys = parsePath(path);

@@ -133,8 +133,8 @@ const msg = k("key", {
 // result: Egypt is where I'm from
 ```
 
-> 🀄️ <br /> 
-> `kalemah()` -> refers to the default document <br /> 
+> 🀄️ <br />
+> `kalemah()` -> refers to the default document <br />
 > `kalemah(doc_id)` -> if you have a document with an especial "key"
 
 #### changeLanguage(local_name)
@@ -257,5 +257,6 @@ dir("ar"); // rtl
 **Free My People. Be on the right side of the history**
 
 ---
+
 Alhamdulillah, Allah is the best of the planners 💚️ <br />
 **MIT © Ahmed Ragab**

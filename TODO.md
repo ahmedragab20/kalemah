@@ -1,0 +1,22 @@
+- Migrating to Bun.
+- Introducing Bun initial sample test.
+- Taze Configuration.
+- Knip Configuration.
+- ESLint Configuration.
+- Configure devcontainer.
+- CI/CD Configuration.
+
+- Migrate to unbuild.
+- Watchout for Rolldown-rs
+- rewrite the APIs.
+- support DX auto completion out of the box.
+- Implement testing for the whole project.
+- convert the repo to a monorepo with packages.
+- build integrations for FE frameworks.
+- Build VSCode / WebStorm extensions.
+
+- releasing CI/CD.
+- Github configuration
+  - Issue templates.
+  - Pull request templates.
+  - Missing OSS files.

@@ -3,4 +3,4 @@
  */
 const internalMap = new Map<string, any>();
 
-export default internalMap
+export default internalMap;
