@@ -254,7 +254,7 @@ dir("ar"); // rtl
 
 <br />
 
-**Free My People. Be on the right side of the history**
+**Free My People. Be on the right side of history**
 
 ---
 
