@@ -27,7 +27,7 @@ export default class Doc {
     this._key = doc.key || "default";
     this._browser = doc.browser || false;
     this._localizations = doc.localizations;
-    this._default = doc.default || doc.localizations?.[0]?.name;
+    this._default = doc.default || doc.localizations?.[0]?.name as string;
     this._active = doc.active || this._default;
 
     // persist the doc internally

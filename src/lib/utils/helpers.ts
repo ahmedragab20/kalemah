@@ -1,3 +1,5 @@
+import { generateTypes, resolveSchema } from "untyped";
+
 import internal from "../store/internal";
 import type { IGeneric } from "../types";
 import type { IDocInstance, ILocalization } from "../types/doc";
@@ -184,4 +186,8 @@ function parsePath(path: string): string[] {
   const bracketsRegex = /\['(.*?)'\]/g;
 
   return path?.replace(bracketsRegex, ".$1")?.split(".");
+}
+
+export async function resolveType(obj: IGeneric) {
+  return generateTypes(await resolveSchema(obj));
 }
